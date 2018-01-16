@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# based on cb-exit used in CrunchBang Linux <http://crunchbanglinux.org/>
-
 import pygtk
 pygtk.require('2.0')
 import gtk
