@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/                 file:///usr/share/openbox/menu.xsd">
 	<menu id="root-menu" label="Openbox 3.5">
-		<menu id="openbox-menu" label="Applications" execute="/usr/bin/openbox-menu lxde-applications.menu"/>
+		<menu execute="/usr/bin/openbox-menu lxde-applications.menu" id="openbox-menu" label="Applications"/>
 		<menu execute="~/.config/openbox/pipemenus/obpipemenu-places ~/" id="places" label="Places"/>
 		<menu execute="~/.config/openbox/pipemenus/obrecent.sh ~/" id="recent" label="Recent Files"/>
 		<menu id="Preferences" label="Preferences">
@@ -9,7 +9,7 @@
 				<item label="Edit autostart">
 					<action name="Execute">
 						<execute>
-							mousepad ~/.config/openbox/autostart
+							geany ~/.config/openbox/autostart
 						</execute>
 					</action>
 				</item>
@@ -115,18 +115,18 @@
 					</execute>
 				</action>
 			</item>
-                        <item label="Terminal">
-                                <action name="Execute">
-                                        <execute>
+			<item label="Terminal">
+				<action name="Execute">
+					<execute>
                                                lxterminal
                                         </execute>
-                                </action>
-                        </item>
+				</action>
+			</item>
 		</menu>
 		<separator/>
 		<item label="Exit">
 			<action name="Execute">
-                        <execute>
+				<execute>
                         oblogout
                         </execute>
 			</action>
