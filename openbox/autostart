@@ -1,8 +1,17 @@
 sleep 5s && kalu &
 nitrogen --restore &
 volumeicon &
-compton --config ~/.config/compton.conf -b &
+nm-applet &
+#compton --config ~/.config/compton.conf -b &
 tint2 &
-plank &
-conky -c ~/.config/conky.conf &
+#plank &
+#conky -c ~/.config/conky.conf &
 lxpolkit &
+#sh ~/.config/polybar/launch.sh &
+/usr/bin/xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1 &
+/usr/bin/xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Accel Speed" 1 &
+~/./pcloud &
+redshift-gtk &
+blueman-applet &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
+
