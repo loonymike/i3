@@ -40,7 +40,7 @@
                   'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>Numix Frost</name>
+    <name>Numix-Frost</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
@@ -175,23 +175,6 @@
         <wrap>no</wrap>
       </action>
     </keybind>
-    <!--
-    <keybind key="XF86AudioNext">
-      <action name="Execute">
-        <command>audacious -f</command>
-      </action>
-    </keybind>
-    <keybind key="XF86AudioPrev">
-      <action name="Execute">
-        <command>audacious -r</command>
-      </action>
-    </keybind>
-    <keybind key="XF86AudioStop">
-      <action name="Execute">
-        <command>audacious -s</command>
-      </action>
-    </keybind>
-    -->
     <keybind key="XF86PowerOff">
       <action name="Execute">
         <command>oblogout</command>
@@ -201,13 +184,6 @@
         </startupnotify>
       </action>
     </keybind>
-    <!--
-    <keybind key="XF86AudioPlay">
-      <action name="Execute">
-        <command>audacious -t</command>
-      </action>
-    </keybind>
-    -->
     <keybind key="C-A-Right">
       <action name="DesktopRight">
         <wrap>no</wrap>
@@ -244,7 +220,9 @@
       </action>
     </keybind>
     <keybind key="W-F1">
-      <action name="Desktop"/>
+      <action name="Desktop">
+        <desktop>1</desktop>
+      </action>
     </keybind>
     <keybind key="W-F2">
       <action name="Desktop">
@@ -269,33 +247,13 @@
     </keybind>
     <keybind key="A-F2">
       <action name="Execute">
-        <command>gmrun</command>
+        <command>rofi -show drun</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>gmrun</name>
         </startupnotify>
       </action>
     </keybind>
-    <!--
-    <keybind key="A-F3">
-      <action name="Execute">
-        <command>~/.config/dmenu/dmenu-bind.sh</command>
-        <startupnotify>
-          <enabled>yes</enabled>
-          <name>dmenu</name>
-        </startupnotify>
-      </action>
-    </keybind>
-    <keybind key="W-C-Space">
-      <action name="Execute">
-        <command>dmenu_run -i</command>
-        <startupnotify>
-          <enabled>yes</enabled>
-          <name>dmenu</name>
-        </startupnotify>
-      </action>
-    </keybind>
-    -->
     <keybind key="A-Escape">
       <action name="Lower"/>
       <action name="FocusToBottom"/>
@@ -329,7 +287,7 @@
     </keybind>
     <keybind key="W-w">
       <action name="Execute">
-        <command>chromium</command>
+        <command>firefox</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>Web Browser</name>
@@ -338,7 +296,7 @@
     </keybind>
     <keybind key="W-t">
       <action name="Execute">
-        <command>lxterminal</command>
+        <command>gnome-terminal</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>lxterminal</name>
@@ -359,7 +317,7 @@
     </keybind>
     <keybind key="W-e">
       <action name="Execute">
-        <command>mousepad</command>
+        <command>geany</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>geany</name>
@@ -368,7 +326,7 @@
     </keybind>
     <keybind key="W-m">
       <action name="Execute">
-        <command>xnoise</command>
+        <command>thunderbird</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>Media Player</name>
