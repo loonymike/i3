@@ -19,7 +19,7 @@ general {
 order += "volume master"
 order += "disk /"
 order += "disk /data"
-#order += "disk /home"
+order += "disk /home"
 #order += "run_watch DHCP"
 #order += "ipv6"
 order += "path_exists VPN"
@@ -94,6 +94,12 @@ disk "/data" {
         threshold_type = percentage_avail
 }
 
+disk "/home" {
+		format = "%avail"
+		prefix_type	=	custom
+		low_threshold = 20
+		threshold_type = percentage_avail
+}
 
 volume master {
     format = "%volume"
