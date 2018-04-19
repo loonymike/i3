@@ -20,12 +20,12 @@ alert = #bd2c40
 
 [bar/polybar]
 ;monitor = ${env:MONITOR:HDMI-1}
-monitor-fallback = LVDS-0
+monitor = LVDS-0
 width = 100%
-height = 24
+height = 27
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 6.0
+radius = 0.0
 fixed-center = false
 
 background = ${colors.background}
@@ -43,77 +43,128 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-;font-0 = fixed:pixelsize=9;1
-font-0 = FontAwesome:pixelsize=12;0
+;font-0 = fixed:pixelsize=10;1
+font-0 = font-0 = FontAwesome:pixelsize=10;0
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = siji:pixelsize=10;1
+;font-2 = System San Francisco Display:size=10;2
 
-modules-left = i3
-modules-center = 
-modules-right = filesystem volume temperature memory cpu wlan battery date 
+
+modules-left = workspaces
+; modules-center = 
+modules-right = filesystem xbacklight volume memory cpu temperature wlan battery date
+
+; xkeyboard powermenu eth
 
 tray-position = right
 tray-padding = 2
-;tray-transparent = true
-;tray-background = #0063ff
 
-;wm-restack = bspwm
-;wm-restack = i3
+; tray-transparent = true
+; tray-background = #0063ff
 
-;override-redirect = true
+; wm-restack = bspwm
+; wm-restack = i3
 
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
+; override-redirect = false
 
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+; scroll-up = bspwm-desknext
+; scroll-down = bspwm-deskprev
 
-cursor-click = pointer
-cursor-scroll = ns-resize
+; scroll-up = i3wm-wsnext
+; scroll-down = i3wm-wsprev
+
+; cursor-click = pointer
+; cursor-scroll = ns-resize
 
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...%
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = ""
+format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-underline = ${colors.secondary}
+
+label-layout = %layout%
+label-layout-underline = ${colors.secondary}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
 
 [module/filesystem]
 type = internal/fs
 interval = 25
 
 mount-0 = /
+mount-1 = /home
 
 label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
-[module/bspwm]
-type = internal/bspwm
+[module/workspaces]
+type = internal/xworkspaces
+pin-workspaces = true
+enable-click = false
+enable-scroll = false
+format-padding = 2
 
-label-focused = %index%
-label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.primary}
-label-focused-padding = 2
+icon-0 = desktop 1;
+icon-1 = desktop 2;
+icon-2 = desktop 3;
+icon-3 = desktop 4;
+icon-default =
+format = <label-state>
 
-label-occupied = %index%
-label-occupied-padding = 2
+; Available tokens:
+;   %name%
+; Default: %name%
+label-monitor = %name%
 
-label-urgent = %index%!
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %name%
+label-active = %icon% %name% 
+label-active-foreground = #ffffff
+label-active-background = #3f3f3f
+label-active-underline = #fba922
 
-label-empty = %index%
-label-empty-foreground = ${colors.foreground-alt}
-label-empty-padding = 2
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %name%
+label-occupied = %icon% %name%
+label-occupied-underline = #02840F
 
 [module/i3]
 type = internal/i3
 format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
+pin-workspaces = true
+strip-wsnumber = true
 
-; Only show workspaces on the same output as the bar
-;pin-workspaces = true
+; ws-icon-[0-9]+ = label;icon
+; NOTE: The label needs to match the name of the i3 workspace
+ws-icon-0 = desktop 1;♚
+ws-icon-1 = desktop 2;♛
+ws-icon-2 = desktop 3;♜
+ws-icon-3 = desktop 4;♝
+ws-icon-default = ♟
 
+; Available tokens:
+;   %mode%
+; Default: %mode%
 label-mode-padding = 2
+label-mode = %mode%
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
@@ -138,115 +189,92 @@ label-urgent = %index%
 label-urgent-background = ${module/bspwm.label-urgent-background}
 label-urgent-padding = ${module/bspwm.label-urgent-padding}
 
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 2
+label-separator-foreground = #ffb52a
+
+
+[module/xbacklight]
+type = internal/xbacklight
+
+; format = <label> <bar>
+format = <label>
+label = BL %percentage%%
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
+
 [module/cpu]
 type = internal/cpu
-interval = 2
+format-prefix = ""
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
-;label = %percentage:2%%
 
-; Available tags:
-;   <label> (default)
-;   <bar-load>
-;   <ramp-load>
-;   <ramp-coreload>
-format = <label> <ramp-coreload>
+; Seconds to sleep between updates
+; Default: 1
+interval = 1
 
 ; Available tokens:
 ;   %percentage% (default) - total cpu load
 ;   %percentage-cores% - load percentage for each core
 ;   %percentage-core[1-9]% - load percentage for specific core
-label = CPU %percentage%%
-
-ramp-coreload-0 = ▁
-ramp-coreload-1 = ▂
-ramp-coreload-2 = ▃
-ramp-coreload-3 = ▄
-ramp-coreload-4 = ▅
-ramp-coreload-5 = ▆
-ramp-coreload-6 = ▇
-ramp-coreload-7 = █
+label = cpu %percentage-cores%
 
 [module/memory]
 type = internal/memory
 interval = 2
+format-prefix = ""
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
-;label =  %percentage_used%%
-
-; Available tokens:
-;   %percentage_used% (default)
-;   %percentage_free%
-;   %gb_used%
-;   %gb_free%
-;   %gb_total%
-;   %mb_used%
-;   %mb_free%
-;   %mb_total%
-label = RAM %gb_used%
-
-[module/temperature]
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 60
-
-;format = <ramp> <label>
-format-underline = #00c413
-format-warn = <label-warn>
-format-warn-underline = #FFFF00
-
-label = %temperature%
-label-warn = %temperature%
-label-warn-foreground = ${colors.secondary}
-
-ramp-0 =  
-ramp-1 =  
-ramp-2 =  
-;ramp-foreground = ${colors.foreground-alt}
+label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
 interface = wlp3s0
 interval = 3.0
 
+; format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1
-label-connected = %local_ip% (%signal%) (%downspeed:min:max%) (%upspeed:min:max%)
-;format-connected = <ramp-signal> <label-connected>
+label-connected = %essid% %local_ip% (%signal%)
+label-disconnected = off-line
+
+;format-disconnected =
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/eth]
+type = internal/network
+interface = eno1
+interval = 3.0
+
+format-connected-underline = #55aa55
+format-connected-prefix = ""
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
-label-disconnected = %ifname% disconnected
+;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
-
-; @deprecated: Define min width using token specifiers (%downspeed:min% and %upspeed:min%)
-; Minimum output width of upload/download rate
-; Default: 3
-; udspeed-minwidth = 5
-
-
-; Accumulate values from all interfaces
-; when querying for up/downspeed rate
-; Default: false
-accumulate-stats = true
-
-;<ramp-signal>
-ramp-signal-0 =  
-ramp-signal-1 =  
-ramp-signal-2 =  
-ramp-signal-3 =  
-ramp-signal-4 =  
-ramp-signal-5 =  
 
 [module/date]
 type = internal/date
-interval = 1
+interval = 5
 
-date-alt = "%Y-%m-%d"
+date =
+date-alt = " %Y-%m-%d"
 
 time = %H:%M
 time-alt = %H:%M:%S
 
+format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #0a6cf5
 
@@ -255,95 +283,53 @@ label = %date% %time%
 [module/volume]
 type = internal/volume
 
-format-volume = <label-volume> <bar-volume>
-label-volume = 
+; format-volume = <label-volume> <bar-volume>
+format-volume = <label-volume>
+; label-volume = VOL
+label-volume = VOL %percentage%%
 label-volume-foreground = ${root.foreground}
-format-volume-underline = #ffb52a
 
+; format-volume-underline = #303F9F
+
+format-muted-prefix = "muted"
 format-muted-foreground = ${colors.foreground-alt}
-label-muted = mute
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
+label-muted = %percentage%%
 
 [module/battery]
 type = internal/battery
 battery = BAT0
-adapter = AC
-full-at = 83
+adapter = ADP1
+full-at = 85
 
-; see "man date" for details on how to format the time string
-; NOTE: if you want to use syntax tags here you need to use %%{...}
-; Default: %H:%M:%S
-time-format = %H:%M
+label-charging = %percentage%%
+label-discharging = %percentage%% %time%
+label-full = 100%
 
-format-charging = <animation-charging> <label-charging>
-format-charging-underline = #00c413
+format-charging = <label-charging>
+format-charging-underline = #ffb52a
 
-format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = #f90000
+format-discharging = <label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+; format-discharging-underline = #f90000
 
-;format-full-prefix = <label-full>
+format-full-prefix = <label-full>
 format-full-prefix-foreground = ${colors.foreground-alt}
-;format-full-underline = ${self.format-charging-underline}
+format-full-underline = ${self.format-charging-underline}
 
-; Available tokens:
-;   %percentage% (default)
-;   %time%
-;   %consumption% (shows current charge rate in watts)
-label-charging = %time% (%percentage%%)
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 65
 
-; Available tokens:
-;   %percentage% (default)
-;   %time%
-;   %consumption% (shows current discharge rate in watts)
-label-discharging = %time% (%percentage%%)
+format = <label>
+format-underline = #f50a4d
+format-warn = <label-warn>
+format-warn-underline = ${self.format-underline}
 
-; If an inotify event haven't been reported in this many
-; seconds, manually poll for new values.
-;
-; Needed as a fallback for systems that don't report events
-; on sysfs/procfs.
-;
-; Disable polling by setting the interval to 0.
-;
-; Default: 5
-poll-interval = 5
+label = %temperature%
+label-warn = %temperature%
+label-warn-foreground = ${colors.secondary}
 
-; Available tokens:
-; %percentage% (default)
-;format-full-prefix =  
-label-full =  %percentage%%
-format-full-underline = #9acd32
-
-ramp-capacity-0 =  
-ramp-capacity-1 =  
-ramp-capacity-2 =  
-ramp-capacity-3 =  
-ramp-capacity-4 =  
-;ramp-capacity-foreground = ${colors.foreground-alt}
-
-animation-charging-0 =  
-animation-charging-1 =  
-animation-charging-2 =  
-animation-charging-3 =  
-animation-charging-4 =  
-animation-charging-framerate = 750
-;animation-charging-foreground = ${colors.foreground-alt}
 
 [settings]
 screenchange-reload = true
